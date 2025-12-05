@@ -26,15 +26,23 @@ func SetItem(slice []int, index, value int) []int {
 
 // PrependItems adds an arbitrary number of values at the front of a slice.
 func PrependItems(slice []int, values ...int) []int {
+	if len(values) == 0 {
+        return slice
+    }
     return append(values, slice...)
 }
 
 // RemoveItem removes an item from a slice by modifying the existing slice.
 func RemoveItem(slice []int, index int) []int {
-    if index < 0 || index >= len(slice) {
+	if index < 0 || index >= len(slice) {
         return slice
     }
-	firstPart := slice[0:index]
-    secondPart := slice[index+1:]
-    return append(firstPart, secondPart...)
+    if index == 0 {
+        slice = slice[1:]
+        return slice
+    }
+    startingIndex := index + 1
+    firstHalf := slice[0:index]
+    secondHalf := slice[startingIndex:]
+    return append(firstHalf, secondHalf...)
 }
